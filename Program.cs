@@ -1,90 +1,4 @@
-﻿int calcularDivisores(int estrelas)
-    {
-        //primeiro passo: fatoração e identificação dos expoentes...
-        //segundo passo: somar 1 a cada expoente...
-        //terceiro passo: multiplicar os resultados e o resultado será o número de dividores do valor de entrada...
 
-        //passo 1:
-
-        int estrelasAux = estrelas;
-        
-        ///lista de fatores utilizados
-        List<int> fatores = new List<int>();
-        
-        ///lista de quantidade de vezes que os fatores foram utilizados
-        List<int> listaQtdFatUtil = new List<int>();
-        
-        //fator
-        int fator = 2;
-        
-        //adiciona o primeiro fator utilizado
-        fatores.Add(fator);
-
-        //quantidade de Vezes que o Fator foi utilizado
-        int qtdFatUtil = 0;
-
-        //enquanto o resultado da fatoração não atingir 1 continue fatorando
-        while(estrelasAux != 1)
-        {
-        
-        do
-        {
-            //se o resultado da divisão for zero então realize-a
-            if(estrelasAux % fator == 0)
-            {
-            //fatorando
-            estrelasAux = estrelasAux / fator;  
-            
-            //soma o numero de vezes que o fator foi utilizado...
-            qtdFatUtil++;
-            }
-            
-        //continue realizando a divisão enquanto o resultado for igual a zero se não aumente o fator.
-        }while(estrelasAux % fator == 0);
-        
-        //adiciona quantidade de uso do fator na lista
-        listaQtdFatUtil.Add(qtdFatUtil);
-        
-        //reinicia contagem
-        qtdFatUtil = 0;
-
-        if(estrelasAux != 1)
-        {
-            //aumenta o fator para garantir resto 0
-            fator++;
-            
-            //adiciona fator a lista de utilizados
-            fatores.Add(fator);
-        }
-        }
-        
-        //Console.WriteLine("lista de fatores utilizados: \t\t\t\t" + String.Join(", ", fatores));
-        //Console.WriteLine("lista de numero de vezes em que o fator foi utilizado: \t" + String.Join(", ", listaQtdFatUtil));
-
-
-        //passo 2:
-
-        for(int i = 0; i < listaQtdFatUtil.Count; i++)
-        {
-            listaQtdFatUtil[i] += 1;
-            //Console.WriteLine(listaQtdFatUtil[i]);
-        }
-
-
-        //passo 3:
-        int numeroDeDivisoresDoValorDeEntrada = 1;
-
-        foreach(var fatorResult in listaQtdFatUtil)
-        {
-            numeroDeDivisoresDoValorDeEntrada *= fatorResult;
-        }
-        
-        //Console.WriteLine(numeroDeDivisoresDoValorDeEntrada);
-
-        return numeroDeDivisoresDoValorDeEntrada;
-        
-    }
-/*
 //lista de quantidades a serem testadas baseando-se em C 
 List<int> casos = new List<int>();
 
@@ -105,17 +19,27 @@ for (int i = 0; i < c; i++)
 }
 
 //testa cada caso
-foreach(var qtdEsferas in casos)
+for(int i = 0; i < casos.Count; i++)
 {
     //quantidade de esferas a serem coletadas
     int count = 0;
     
     //testa cada esfera
-    for(int i = 0; i < qtdEsferas; i++)
+    for(int j = 1; j <= casos[i]; j++)
     {
-        int qtdDivisores = calcularDivisores(i);
+        /*
+        *   O método tradicional para encontrar os divisores de um número consiste em fatorar o número, obter a quantidade de vezes
+        *que cada fator foi utilizado(estes são expoentes do fator), somar 1 em cada expoente, e então multiplicar todos os resultantes...
+        *   Durante o processo acima descobri resultados relevantes ao resolver o problema no papel, logo realizei o processo de "prova real" ou 
+        *dos resultados para o valor original.
+        *   sempre que o numero de divisores é par o Número não possui raiz quadrada exata, 
+        *mas se o número de divisores é ímpar haver á um termo central na lista de divisores, este é a raiz 
+        *quadrada exata.
+        *   mediante o exposto acima, só preciso contabilizar a raiz quadrada de resultados com casas decimais...
+        */
+        double qtdDivisores = Math.Sqrt(j);
     
-        if(qtdDivisores % 2 == 0)
+        if(qtdDivisores % 1 != 0)
         {
             count++; 
         }
@@ -130,20 +54,3 @@ foreach(var resultado in resultados)
     Console.WriteLine(resultado);
 }
 
-
-*/
- //quantidade de esferas a serem coletadas
-    int count = 0;
-    
-    //testa cada esfera
-    for(int i = 1; i <= 24; i++)
-    {
-        int qtdDivisores = calcularDivisores(i);
-    
-        if(qtdDivisores % 2 == 0)
-        {
-            count++; 
-        }
-    }
-
-    Console.WriteLine(count);
